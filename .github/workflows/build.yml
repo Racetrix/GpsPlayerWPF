@@ -33,7 +33,7 @@ jobs:
     # -o ./publish: 输出到 publish 文件夹
     - name: Publish EXE
       run: |
-        dotnet publish GpsPlayerWPF.csproj -c Release -r win-x64 -p:PublishSingleFile=true -p:SelfContained=false -p:EnableCompressionInSingleFile=true -o ./publish
+        dotnet publish GpsPlayerWPF.csproj -c Release -r win-x64 -p:PublishSingleFile=true -p:SelfContained=false -o ./publish
 
     # 4. 上传编译产物 (这样你才能在 GitHub 网页上下载到)
     - name: Upload Artifact
