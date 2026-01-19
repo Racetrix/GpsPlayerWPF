@@ -1,0 +1,44 @@
+name: Build WPF App
+
+# 触发条件：当推送到 main 或 master 分支时触发
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    name: Build Windows EXE
+    # WPF 必须在 Windows 环境下编译
+    runs-on: windows-latest
+
+    steps:
+    # 1. 拉取代码
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 2. 安装 .NET 环境 (这里用 .NET 8，如果你用 .NET 6 请改为 6.0.x)
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # 3. 执行编译命令
+    # 解释：
+    # -c Release: 发布模式
+    # -r win-x64: 目标平台 Windows 64位
+    # --self-contained true: 内置运行库 (别人不用装.NET也能跑)
+    # -p:PublishSingleFile=true: 合并成一个EXE
+    # -o ./publish: 输出到 publish 文件夹
+    - name: Publish EXE
+      run: |
+        dotnet publish GpsPlayerWPF.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
+
+    # 4. 上传编译产物 (这样你才能在 GitHub 网页上下载到)
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: GpsPlayer-Build
+        path: ./publish/*.exe
+        retention-days: 5 # 文件保留5天，避免占用空间
