@@ -138,7 +138,27 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
                     <Button Content="📂 加载 CSV" Click="BtnLoad_Click"/>
-                    <Button Content="✂️ 切割文件" Click="BtnCut_Click" Background="#C19A6B"/>
+                    <Border Background="#2D2D30" CornerRadius="8" Padding="10">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                            <TextBlock Text="打点编辑：" VerticalAlignment="Center" Foreground="#AAAAAA" Margin="0,0,10,0"/>
+
+                            <Button x:Name="BtnMarkIn" Click="BtnMarkIn_Click" 
+                Content="🚩 设为起点 (A)" ToolTip="Mark In" Width="100"/>
+
+                            <Button x:Name="BtnMarkOut" Click="BtnMarkOut_Click" 
+                Content="🏁 设为终点 (B)" ToolTip="Mark Out" Width="100"/>
+
+                            <Border Background="#444" CornerRadius="4" Padding="10,2" Margin="10,0">
+                                <TextBlock x:Name="LblSelectionRange" Text="未选择范围" 
+                       Foreground="#FFD700" FontWeight="Bold" VerticalAlignment="Center" Width="160" TextAlignment="Center"/>
+                            </Border>
+
+                            <Button Content="💾 保存选中段" Click="BtnSaveRange_Click" Background="#2E7D32" FontWeight="Bold"/>
+                            <Button Content="❌ 清除" Click="BtnClearMarks_Click" Width="50"/>
+
+                        </StackPanel>
+                    </Border>
                     <Border Width="20"/>
                     <Button Content="⏮" Click="BtnPrev_Click" Width="50"/>
                     <Button x:Name="BtnPlay" Content="▶ 播放" Click="BtnPlay_Click" Width="100" Background="#4CAF50" FontWeight="Bold"/>
